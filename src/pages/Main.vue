@@ -1,15 +1,12 @@
 <template>
 	<div class="container">
-		<footer>
-			<h1>Новости</h1>
-			<div class="search">
-				<input
-					class="search__input" 
-					v-model="search" 
-					placeholder="Найти новость">
-				</input>
-			</div>
-		</footer>
+		<div class="search">
+			<input
+				class="search__input" 
+				v-model="search" 
+				placeholder="Найти новость">
+			</input>
+		</div>
 		<Categories
 			@categorySelected="categorySelected"/>
 		<div v-if="loading">Загрузка...</div>
@@ -67,9 +64,6 @@ async function load() {
 function categorySelected(category){
 	selectedCategory.value = category
 }
-
-
-
 </script>
 
 <style scoped lang="scss">

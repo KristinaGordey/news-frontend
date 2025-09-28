@@ -1,7 +1,7 @@
 <template>
-  <NewsPage />
+	<h1>Новости</h1>
+	<router-view/>
 </template>
 
 <script setup>
-import NewsPage from './pages/Main.vue'
 </script>

@@ -13,18 +13,30 @@
 				<img src="../assets/views.png" alt="views" class="news-card__views-icon" />
 				<span class="news-card__views-count">{{ props.article.views }}</span>
 			</div>
-			<div class="news-card__details">Подробнее..</div>
+			<div 
+				class="news-card__details"
+				@click="goToDetails"
+			>
+				Подробнее..
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	const props = defineProps({
-		article: {
-			type: Object,
-			required: true
-		}
-	})
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const props = defineProps({
+	article: {
+		type: Object,
+		required: true
+	}
+})
+
+function goToDetails(){
+	router.push({ name: 'news_id', params: { id: props.article.id}})
+}
 </script>
 
 <style lang="scss">
