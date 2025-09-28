@@ -80,7 +80,7 @@ function categorySelected(category){
 	padding-bottom: 20px;
 
 	&__input {
-		width: 100%;
+		width: 50%;
 		height: 30px;
 		border-radius: 8px;
 		border: 1px solid #90cdf4;
