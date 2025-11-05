@@ -42,3 +42,7 @@ function goBack(){
 	router.back()
 }
 </script>
+
+<style scoped lang="scss">
+
+</style>

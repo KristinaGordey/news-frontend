@@ -2,13 +2,23 @@
 	<header class="header-wrapper">
 		<h1>Новости</h1>
 		<div class="header-wrapper__button-group">
-			<button>Вход</button>
+			<button @click="isLoginPopup=true">Вход</button>
 			<button>Регистрация</button>
 		</div>
 	</header>
+	<LoginPopup 
+		v-if="isLoginPopup"
+		@close="isLoginPopup=false"
+	/>
 </template>
 
-<script setup></script>
+<script setup>
+import {ref} from 'vue'
+import LoginPopup from './LoginPopup.vue';
+
+const isLoginPopup = ref(false)
+
+</script>
 <style scoped lang="scss">
 .header-wrapper {
 	display: flex;
@@ -24,6 +34,12 @@
 			height: 30px;
 			border-radius: 4px;	
 			background-color: #fff;
+			cursor: pointer;
+
+			&:hover{
+				background-color: #90cdf4;
+				color: #fff;
+			}
 		}
 	}
 }

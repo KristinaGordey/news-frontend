@@ -47,7 +47,7 @@ function goToDetails(){
 	padding: 20px;
 	margin-bottom: 24px;
 	transition: transform 0.2s ease;
-	max-width: 300px;
+	max-width: 400px;
 
 	&:hover {
 		transform: translateY(-4px);
