@@ -8,7 +8,8 @@
 			</input>
 		</div>
 		<Categories
-			@categorySelected="categorySelected"/>
+			@categorySelected="categorySelected"
+		/>
 		<div v-if="loading">Загрузка...</div>
 		<div v-else class="news-wrapper">
 			<div 

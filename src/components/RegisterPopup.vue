@@ -1,8 +1,9 @@
 <template>
 	<div class="popup-overlay" @click="$emit('close')">
 		<div class="popup-wrapper" @click.stop>
-			<h2>Войти</h2>
+			<h2>Регистрация</h2>
 			<input required v-model="username" type="text" placeholder="Логин"></input>
+			<input required v-model="email" type="email" placeholder="Почта"></input>
 			<input required v-model="password" type="password" placeholder="Пароль"></input>
 			<button @click="login">Войти</button>
 		</div>
@@ -16,16 +17,17 @@ const auth = useAuthStore()
 
 const username = ref('')
 const password = ref('')
+const email = ref('')
 
 const emit = defineEmits(['close'])
 
 async function login() {
   try {
-    await auth.login({ email: username.value, password: password.value })
+    await auth.register({ username:username.value, email: email.value, password: password.value })
     console.log('Успешно')
 	emit('close')
   } catch (err) {
-    console.error('Ошибка авторизации:', err)
+    console.error('Ошибка регистрации:', err)
   }
 }
 </script>

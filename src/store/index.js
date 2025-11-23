@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    token: localStorage.getItem('token') || null,
+    token: null,
     user: null,
     status: ''
   }),
@@ -15,37 +15,58 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    async login({ username, password }) {
+    async login({ email, password }) {
       this.status = 'loading'
       try {
         const response = await axios.post('http://localhost:1337/api/auth/local', {
-          identifier: username,
+          identifier: email,
           password: password
         })
 
         const token = response.data.jwt
         const user = response.data.user
 
-        localStorage.setItem('token', token)
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
         this.token = token
         this.user = user
         this.status = 'success'
       } catch (error) {
+		console.log("AUTH ERROR:", error)
         this.status = 'error'
         this.token = null
         this.user = null
-        localStorage.removeItem('token')
         throw error
       }
     },
 
+	async register({ username, email, password}) {
+		this.status = 'loading'
+		try {
+			const response = await axios.post('http://localhost:1337/api/auth/local/register', {
+				username,
+				email,
+				password
+			})
+
+      const token = response.data.jwt
+      const user = response.data.user
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+      this.token = token
+      this.user = user
+      this.status = 'success'
+		} catch (error) {
+      console.error("REGISTRATION ERROR:", error.response?.data)
+      this.status = 'error'
+      throw error
+    }
+	},
     logout() {
       this.status = ''
       this.token = null
       this.user = null
-      localStorage.removeItem('token')
       delete axios.defaults.headers.common['Authorization']
     }
   }
