@@ -37,9 +37,8 @@ onMounted(()=>{
 
 async function load(){
 	try {
-		const response = await fetch('http://localhost:1337/api/categories')
-		const data = await response.json()
-		categories.value = data.data
+		const response = await axios.get('http://localhost:1337/api/categories')
+		categories.value = response.data.data
 	} catch (error) {
 		console.log('Ошибка загрузки категорий: ', error)
 	}

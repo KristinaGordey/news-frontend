@@ -1,5 +1,12 @@
 <template>
 	<div class="news-card">
+		<div 
+			v-if="auth.isAuthenticated" 
+			class="news-card__delete" 
+			@click="deleteArticle"
+		>
+			x
+		</div>
 		<div class="news-card__title">{{ props.article.title }}</div>
 		<div class="news-card__content">{{ props.article.content }}</div>
 		<img
@@ -25,6 +32,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../store/index'
+import axios from 'axios'
+
+const auth = useAuthStore()
 
 const router = useRouter()
 const props = defineProps({
@@ -36,6 +47,17 @@ const props = defineProps({
 
 function goToDetails(){
 	router.push({ name: 'news_id', params: { id: props.article.id}})
+}
+
+async function deleteArticle(){
+  try {
+    const res = await axios.delete(`http://localhost:1337/api/articles/${props.article.documentId}`, {
+      headers: { Authorization: `Bearer ${auth.token}` }
+    })
+    emit('update')
+  } catch (err) {
+    console.error('Ошибка удаления:', err.response?.status, err.response?.data || err)
+  }
 }
 </script>
 
@@ -51,6 +73,13 @@ function goToDetails(){
 
 	&:hover {
 		transform: translateY(-4px);
+	}
+
+	&__delete {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
 	}
 
 	&__image {
