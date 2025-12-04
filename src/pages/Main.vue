@@ -7,11 +7,14 @@
 				placeholder="Найти новость">
 			</input>
 		</div>
+		<div class="news">
+		<FeaturedNews :articles="featuredNews"></FeaturedNews>
+		<div class="news__main">
 		<Categories
 			@categorySelected="categorySelected"
 		/>
 		<div v-if="loading">Загрузка...</div>
-		<div v-else class="news-wrapper">
+		<div v-else class="news__list">
 			<div 
 			v-for="article in filteredArticles" 
 			:key="article.id">
@@ -19,6 +22,9 @@
 				:article="article"/>
 			</div>
 		</div>
+	    </div>
+		</div>
+		
 	</div>
 </template>
 
@@ -26,18 +32,36 @@
 import {ref, onMounted, computed } from 'vue'
 import NewsCard from '../components/NewsCard.vue'
 import Categories from '../components/Categories.vue'
+import FeaturedNews from '../components/FeaturedNews.vue'
+
+
 
 const selectedCategory = ref(null)
 const articles = ref([])
 const search = ref()
 const loading = ref(true)
 
+
 const categoryFilteredArticles = computed(() => {
 	if(!selectedCategory.value){
+		console.log(articles.value)
 		return articles.value
 	}
 	return articles.value.filter(article => article.category?.id === selectedCategory.value.id)
 })
+
+const featuredNews = computed(() => {
+  const nonZero = articles.value.filter(a => a.views > 0)
+
+  const sorted = [...nonZero].sort((a, b) => b.views - a.views)
+
+  const topViews = [...new Set(sorted.map(a => a.views))].slice(0, 5)
+
+  const filtered = nonZero.filter(a => topViews.includes(a.views))
+
+  return filtered.sort((a, b) => b.views - a.views)
+})
+
 
 const filteredArticles = computed(()=>{
 	if(!search.value){
@@ -68,11 +92,18 @@ function categorySelected(category){
 </script>
 
 <style scoped lang="scss">
-.news-wrapper {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	justify-content: flex-start;
+.news {
+	display: flex; 
+	gap: 40px;
+
+	&__list{
+		padding-inline: 60px;
+	
+	}
+	&__main{
+		padding-inline: 10px;
+		flex-grow: 1;
+	}
 }
 .search {
 	display: flex;
