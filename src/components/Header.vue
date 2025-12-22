@@ -1,14 +1,12 @@
 <template>
 	<header class="header-wrapper">
-		 <img
-                        src="../assets/logo.svg"
-						width="190"
-						
-                        loading="lazy"
-                        alt="Apricot News"
-                        class="logo__image"
-						
-                    />
+		<img
+            src="../assets/logo.svg"
+			width="190"			
+            loading="lazy"
+            alt="Apricot News"
+            class="logo__image"			
+        />
 		<div class="search">
 			<input
 				class= "input search__input" 
@@ -69,12 +67,9 @@ const isAddArticlePopup = ref(false)
 		border: 1px solid #f98621;
        	width: 50%;
 		&:hover {
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
-    }
-	   
-
-
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
+    	}
     }
 }
 .header-wrapper {

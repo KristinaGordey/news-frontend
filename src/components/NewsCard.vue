@@ -1,13 +1,16 @@
 <template>
     <div class="news-card glass">
-        <div
-            v-if="auth.isAuthenticated"
-            class="news-card__delete"
-            @click="deleteArticle"
-        >
-            x
-        </div>
-        <div class="news-card__title">{{ props.article.title }}</div>
+		<div class="news-card__header">
+			<div class="news-card__title">{{ props.article.title }}</div>
+			<div
+				v-if="auth.isAuthenticated"
+				class="news-card__delete"
+				@click="deleteArticle"
+        	>
+            	x
+        	</div>
+		</div>
+        
         <div class="news-card__content">{{ props.article.content }}</div>
         <img
             v-if="props.article.coverImage?.url"
@@ -131,10 +134,13 @@ async function deleteArticle() {
     }
 
     &__title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 10px;
+       	font-size: 1rem;
+		font-weight: 700;
+		color: #000;
+		margin: 0;
+		flex: 1;
+		display: flex;
+		align-items: center; 
     }
 
     &__content {
@@ -158,6 +164,22 @@ async function deleteArticle() {
             color: #f98621;
         }
     }
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 10px;
+	}
+
+	&__delete {
+		cursor: pointer;
+		font-weight: bold;
+		font-size: 1.2rem;
+		flex-shrink: 0; 
+		line-height: 1; 
+		color: gray
+	}
 }
 .error-toast {
     position: fixed;
