@@ -1,5 +1,5 @@
 <template>
-    <div class="news-card">
+    <div class="news-card glass">
         <div
             v-if="auth.isAuthenticated"
             class="news-card__delete"
