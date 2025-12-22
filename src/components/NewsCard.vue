@@ -28,15 +28,19 @@
 			</div>
 		</div>
 	</div>
+	<transition name="fade">
+      <div v-if="visible" class="error-toast">{{ message }}</div>
+    </transition>
 </template>
 
 <script setup>
+import { useToast } from '../composables/useToast'
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../store/index'
 import axios from 'axios'
 
+const { message, visible, show } = useToast()
 const auth = useAuthStore()
-
 const router = useRouter()
 const props = defineProps({
 	article: {
@@ -44,21 +48,25 @@ const props = defineProps({
 		required: true
 	}
 })
+const emit = defineEmits(['update'])
 
 function goToDetails(){
 	router.push({ name: 'news_id', params: { id: props.article.id}})
 }
 
-async function deleteArticle(){
+async function deleteArticle() {
   try {
-    const res = await axios.delete(`http://localhost:1337/api/articles/${props.article.documentId}`, {
+    await axios.delete(`http://localhost:1337/api/articles/${props.article.id}`, {
       headers: { Authorization: `Bearer ${auth.token}` }
     })
     emit('update')
   } catch (err) {
-    console.error('Ошибка удаления:', err.response?.status, err.response?.data || err)
+    if (err.response?.status === 403) {
+      show('Вы не можете удалить чужую статью')
+    }
   }
 }
+
 </script>
 
 <style lang="scss">
@@ -76,7 +84,9 @@ async function deleteArticle(){
 	}
 
 	&__delete {
-		position: absolute;
+		// position: absolute;
+		display: flex;
+		justify-content: flex-end;
 		top: 10px;
 		right: 10px;
 		cursor: pointer;
@@ -132,5 +142,24 @@ async function deleteArticle(){
 			color: #90cdf4;
 		}
 	}
+}
+.error-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f56565; // красный фон
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 0.9rem;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>
