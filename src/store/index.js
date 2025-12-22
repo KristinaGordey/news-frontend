@@ -15,6 +15,21 @@ export const useAuthStore = defineStore("auth", {
     },
 
     actions: {
+		initAuth() {
+			const token = localStorage.getItem("token");
+			const user = localStorage.getItem("user");
+
+			if (!token || !user) return;
+
+			try {
+				this.token = token;
+				this.user = JSON.parse(user);
+				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+				this.status = "success";
+			} catch (e) {
+				this.logout();
+			}
+		},
         async login({ email, password }) {
             this.status = "loading";
             try {
@@ -35,6 +50,8 @@ export const useAuthStore = defineStore("auth", {
 
                 this.token = token;
                 this.user = user;
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
                 this.status = "success";
                 console.log("user:", user);
             } catch (error) {
@@ -67,6 +84,8 @@ export const useAuthStore = defineStore("auth", {
 
                 this.token = token;
                 this.user = user;
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
                 this.status = "success";
             } catch (error) {
                 console.error("REGISTRATION ERROR:", error.response?.data);
@@ -78,6 +97,8 @@ export const useAuthStore = defineStore("auth", {
             this.status = "";
             this.token = null;
             this.user = null;
+			localStorage.removeItem("token");
+    		localStorage.removeItem("user");
             delete axios.defaults.headers.common["Authorization"];
         },
     },
