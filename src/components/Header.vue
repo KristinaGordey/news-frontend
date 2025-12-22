@@ -1,15 +1,32 @@
 <template>
 	<header class="header-wrapper">
-		<h1>Новости</h1>
+		 <img
+                        src="../assets/logo.svg"
+						width="190"
+						
+                        loading="lazy"
+                        alt="Apricot News"
+                        class="logo__image"
+						
+                    />
+		<div class="search">
+			<input
+				class= "input search__input" 
+				v-model="search" 
+				name="search"
+				placeholder="Найти новость"
+				>
+			</input>
+		</div>
 		<div v-if="!auth.isAuthenticated" class="header-wrapper__button-group">
-			<button @click="isLoginPopup=true">Вход</button>
-			<button @click="isRegisterPopup=true">Регистрация</button>
+			<button class="button" @click="isLoginPopup=true">Вход</button>
+			<button class="button" @click="isRegisterPopup=true">Регистрация</button>
 		</div>
 		<div v-else class="header-wrapper__button-group">
-			<button @click="isAddArticlePopup = true">
+			<button class="button" @click="isAddArticlePopup = true">
 				Добавить статью
 			</button>
-			<button @click="auth.logout()">
+			<button class="button" @click="auth.logout()">
 				Выйти
 			</button>
 		</div>
@@ -43,27 +60,34 @@ const isAddArticlePopup = ref(false)
 
 </script>
 <style scoped lang="scss">
+.search {
+    width: 100%;
+	display: flex;
+	justify-content: center;
+    
+    &__input {
+		border: 1px solid #f98621;
+       	width: 50%;
+		&:hover {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
+    }
+	   
+
+
+    }
+}
 .header-wrapper {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-
+	justify-content:space-evenly;
+	padding-inline: 96px;
+	padding-block: 10px;
+	border-bottom: 1px solid ;
+	
 	&__button-group {
 	display: flex;
-	gap: 10px;
-	
-		button{
-			border: none;
-			height: 30px;
-			border-radius: 4px;	
-			background-color: #fff;
-			cursor: pointer;
-
-			&:hover{
-				background-color: #90cdf4;
-				color: #fff;
-			}
-		}
+	gap: 15px;
 	}
 }
 </style>

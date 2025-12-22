@@ -1,11 +1,13 @@
 <template>
-    <div class="featured-news-card">
-        <div class="featured-news-card__title">{{ props.article.title }}</div>
-        <div class="featured-news-card__content">
+    <div class="news-card featured-news-card glass">
+        <div class="news-card__title featured-news-card__title">
+            {{ props.article.title }}
+        </div>
+        <div class="news-card__content featured-news-card__content">
             {{ props.article.content }}
         </div>
-        <div class="featured-news-card__footer">
-            <div class="news-card__views">
+        <div class="featured-news-card__footer news-card__footer">
+            <div class="featured-news-card__views news-card__views">
                 <img
                     src="../assets/views.png"
                     alt="views"
@@ -15,7 +17,10 @@
                     props.article.views
                 }}</span>
             </div>
-            <div class="news-card__details" @click="goToDetails">
+            <div
+                class="featured-news-card__details news-card__details"
+                @click="goToDetails"
+            >
                 Подробнее..
             </div>
         </div>
@@ -40,62 +45,7 @@ function goToDetails() {
 
 <style lang="scss">
 .featured-news-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    padding: 20px;
-    margin-bottom: 24px;
-    transition: transform 0.2s ease;
     min-width: 300px;
-
-    &:hover {
-        transform: translateY(-4px);
-    }
-
-    &__footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: auto;
-    }
-
-    &__views {
-        display: flex;
-        align-items: center;
-    }
-
-    &__views-icon {
-        width: 16px;
-        height: auto;
-    }
-
-    &__views-count {
-        margin-left: 4px;
-    }
-
-    &__title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #000000;
-        margin-bottom: 10px;
-    }
-
-    &__content {
-        font-size: 0.95rem;
-        color: #333;
-        line-height: 1.6;
-        margin-bottom: 16px;
-    }
-
-    &__details {
-        color: #333;
-        text-align: right;
-        font-size: small;
-        cursor: pointer;
-
-        &:hover {
-            color: #90cdf4;
-        }
-    }
+    min-height: auto;
 }
 </style>

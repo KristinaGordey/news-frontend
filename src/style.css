@@ -1,16 +1,81 @@
 body {
-    background: linear-gradient(90deg, #a7a1db, #e9e6f8, #a7a1db);
-    background-size: 200% 100%;
-    animation: shine 5s infinite;
     margin: 0;
     font-family: "Nunito", serif;
-    padding: 0 96px;
 }
 
-@keyframes shine {
-    to {
-        background-position: 200% 0;
-    }
+.search__input::placeholder {
+    color: #f98621;
+    background: url(".\assets\searchicon.svg") no-repeat 1px center;
+    text-indent: 25px;
+    background-size: 16px 16px;
+}
+
+.container {
+    background-image: url("assets\background.jpg");
+
+    background-size: contain;
+    padding: 0 96px;
+}
+.glass {
+    background: rgba(255, 255, 255, 0.575);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
+
+.button {
+    border: 1px solid #f98621;
+    color: #f98621;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #fff;
+    cursor: pointer;
+    padding-inline: 15px;
+}
+.button:hover {
+    background-color: #f98621;
+    color: #fff;
+}
+
+.popup__header {
+    text-align: center;
+}
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.popup-wrapper {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 300px;
+    align-items: stretch;
+}
+.input {
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 8px;
+    font-size: 14px;
+    height: 30px;
+}
+.input:focus {
+    border-color: #f98621;
+}
+.input:hover {
+    border-color: #f98621;
 }
 
 /* ------- Нормализация ------- 

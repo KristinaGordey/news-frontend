@@ -22,7 +22,7 @@ const props = defineProps({
 <style lang="scss">
 .featured-news {
     &__title {
-        padding-bottom: 20px;
+        padding-bottom: 30px;
     }
 }
 </style>

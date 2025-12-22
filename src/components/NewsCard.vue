@@ -1,5 +1,5 @@
 <template>
-    <div class="news-card">
+    <div class="news-card glass">
         <div
             v-if="auth.currentUser?.id === props.article.user?.id"
             class="news-card__delete"
@@ -77,9 +77,8 @@ async function deleteArticle() {
     gap: 15px;
     flex-direction: column;
     align-content: space-between;
-    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.425);
     padding: 20px;
     margin-bottom: 24px;
     transition: transform 0.2s ease;
@@ -87,6 +86,8 @@ async function deleteArticle() {
 
     &:hover {
         transform: translateY(-4px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
     }
 
     &__delete {
@@ -150,7 +151,7 @@ async function deleteArticle() {
         cursor: pointer;
 
         &:hover {
-            color: #90cdf4;
+            color: #f98621;
         }
     }
 }
