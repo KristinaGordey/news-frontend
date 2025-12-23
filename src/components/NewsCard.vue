@@ -68,7 +68,7 @@ async function deleteArticle() {
                 headers: { Authorization: `Bearer ${auth.token}` },
             }
         );
-        emit("update");
+        emit("update", props.article.id);
     } catch (err) {
         if (err.response?.status === 403) {
             show("Вы не можете удалить чужую статью");

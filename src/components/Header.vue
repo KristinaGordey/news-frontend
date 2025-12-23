@@ -10,7 +10,7 @@
 		<div class="search">
 			<input
 				class= "input search__input" 
-				v-model="search" 
+				v-model="articlesStore.searchQuery" 
 				name="search"
 				placeholder="Найти новость"
 				>
@@ -49,8 +49,11 @@ import LoginPopup from './LoginPopup.vue';
 import RegisterPopup from './RegisterPopup.vue';
 import AddArticlePopup from './AddArticlePopup.vue';
 import { useAuthStore } from '../store/index'
+import { useArticlesStore } from '../store/articles';
+
 
 const auth = useAuthStore()
+const articlesStore = useArticlesStore();
 
 const isLoginPopup = ref(false)
 const isRegisterPopup = ref(false)

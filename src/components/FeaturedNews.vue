@@ -21,6 +21,7 @@ const props = defineProps({
 
 <style lang="scss">
 .featured-news {
+	max-width: 300px;
     &__title {
         padding-bottom: 30px;
     }

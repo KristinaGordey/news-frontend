@@ -13,7 +13,13 @@
                 v-model="content"
                 placeholder="Текст новости"
                 required
-            ></textarea>
+			/>
+			<input
+				type="file"
+				@change="onFileChange"
+				accept="image/*"
+			/>
+
             <select v-model="category" required>
                 <option disabled value="">Выберите категорию</option>
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id">
@@ -27,60 +33,89 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 import { useAuthStore } from "../store/index";
+import { useArticlesStore } from "../store/articles";
+import { useCategories } from "../composables/useCategories";
 
 const auth = useAuthStore();
+const articlesStore = useArticlesStore();
+const { categories } = useCategories();
 
 const emit = defineEmits(["close"]);
 
-const categories = ref([]);
 const title = ref("");
 const content = ref("");
 const category = ref(null);
+const file = ref(null);
 
-onMounted(() => {
-    load();
-});
-
-async function load() {
-    try {
-        const response = await axios.get(
-            "http://localhost:1337/api/categories"
-        );
-        categories.value = response.data.data;
-    } catch (error) {
-        console.log("Ошибка загрузки категорий: ", error);
-    }
-}
 async function createArticle() {
-    try {
-        console.log("user id:", auth.currentUser);
-        const response = await axios.post(
-            "http://localhost:1337/api/articles",
-            {
-                data: {
-                    title: title.value,
-                    content: content.value,
-                    slug: "",
-                    category: {
-                        connect: [{ id: Number(category.value) }],
-                    },
-                    publishedDate: new Date().toISOString(),
-                    user: {
-                        connect: [{ id: Number(auth.currentUser.id) }],
-                    },
-                },
-            }
-        );
+  try {
+    let imageId = null;
 
-        console.log("Article created:", response.data);
+    if (file.value) {
+      const formData = new FormData();
+      formData.append("files", file.value);
 
-        emit("close");
-    } catch (err) {
-        console.error("Ошибка создания статьи:", err.response?.data || err);
+      const response = await axios.post(
+        "http://localhost:1337/api/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      imageId = response.data[0].id;
     }
+
+    await axios.post(
+      "http://localhost:1337/api/articles",
+      {
+        data: {
+          title: title.value,
+          content: content.value,
+          publishedDate: new Date().toISOString(),
+          category: { connect: [{ id: Number(category.value) }] },
+          user: { connect: [{ id: Number(auth.currentUser.id) }] },
+			    coverImage: imageId ? imageId : null        },
+      },
+      {
+        headers: { Authorization: `Bearer ${auth.token}` },
+      }
+    );
+
+    await articlesStore.load();
+    emit("close");
+  } catch (error) {
+    console.error("Ошибка создания статьи:", error.response?.data || error);
+  }
+}
+
+
+
+async function uploadFile() {
+    if (!file.value) return null;
+
+    const formData = new FormData();
+    formData.append("files", file.value);
+
+    const response = await axios.post("http://localhost:1337/api/upload", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    return response.data[0].id;
+}
+
+
+function onFileChange(e) {
+    const selected = e.target.files[0];
+    if (selected) file.value = selected;
 }
 </script>
 

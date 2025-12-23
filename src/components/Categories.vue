@@ -1,46 +1,41 @@
 <template>
     <nav class="categories-menu">
+		<div
+			class="categories-menu__item"
+			:class="{ 'categories-menu__item--active': !selectedCategory }"
+			@click="selectCategory(null)"
+		>
+			Все
+		</div>
         <div
             class="categories-menu__item"
             v-for="category in categories"
             :key="category.id"
             :class="{
                 'categories-menu__item--active':
-                    selectedCategory && selectedCategory.id === category.id,
+                    selectedCategory?.id === category.id,
             }"
             @click="selectCategory(category)"
         >
-            {{ category.name }}
+           {{ category?.name }}
         </div>
     </nav>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
+import { useCategories } from "../composables/useCategories";
 
-const categories = ref([]);
+const { categories } = useCategories();
 const selectedCategory = ref(null);
 
 const emit = defineEmits(["categorySelected"]);
 
-onMounted(() => {
-    load();
-});
-
-async function load() {
-    try {
-        const response = await fetch("http://localhost:1337/api/categories");
-        const data = await response.json();
-        categories.value = data.data;
-    } catch (error) {
-        console.log("Ошибка загрузки категорий: ", error);
-    }
-}
-
 function selectCategory(category) {
-    selectedCategory.value = category;
-    emit("categorySelected", category);
+  selectedCategory.value = category;
+  emit("categorySelected", category);
 }
+
 </script>
 
 <style scoped lang="scss">
