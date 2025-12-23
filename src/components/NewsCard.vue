@@ -1,6 +1,5 @@
 <template>
     <div class="news-card glass">
-<<<<<<< HEAD
 		<div class="news-card__header">
 			<div class="news-card__title">
 				{{ props.article.title }}
@@ -24,19 +23,6 @@
 			</div>
 		</div>
         
-=======
-        <div class="news-card__header">
-            <div class="news-card__title">{{ props.article.title }}</div>
-            <div
-                v-if="auth.isAuthenticated"
-                class="news-card__delete"
-                @click="deleteArticle"
-            >
-                x
-            </div>
-        </div>
-
->>>>>>> 629117fac0ef01d827664e03b1e49c26fce2e18d
         <div class="news-card__content">{{ props.article.content }}</div>
         <img
             v-if="props.article.coverImage?.url"
@@ -223,7 +209,6 @@ async function deleteArticle() {
         }
     }
 
-<<<<<<< HEAD
 	&__header {
 		display: flex;
 		justify-content: space-between;
@@ -231,14 +216,6 @@ async function deleteArticle() {
 		gap: 10px;
 		margin-bottom: 10px;
 	}
-=======
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
->>>>>>> 629117fac0ef01d827664e03b1e49c26fce2e18d
 
     &__delete {
         cursor: pointer;
