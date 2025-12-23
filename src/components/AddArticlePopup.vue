@@ -1,27 +1,36 @@
 <template>
     <div class="popup-overlay" @click="$emit('close')">
         <div class="popup-wrapper" @click.stop>
-            <h2>Добавить новость</h2>
-
+            <header class="add-article-popup__header popup__header">
+                <h2 class="add-article-popup__title popup__title">
+                    Добавить новость
+                </h2>
+            </header>
             <input
+                class="input"
                 v-model="title"
                 type="text"
                 placeholder="Заголовок"
                 required
             />
             <textarea
+                class="add-article-popup__textarea"
                 v-model="content"
                 placeholder="Текст новости"
                 required
             ></textarea>
-            <select v-model="category" required>
-                <option disabled value="">Выберите категорию</option>
+            <select
+                class="add-article-popup__select-category"
+                v-model="category"
+                required
+            >
+                <option value="" disabled selected>Выберите категорию</option>
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                     {{ cat.name }}
                 </option>
             </select>
 
-            <button @click="createArticle">Создать</button>
+            <button class="button" @click="createArticle">Создать</button>
         </div>
     </div>
 </template>
@@ -38,7 +47,7 @@ const emit = defineEmits(["close"]);
 const categories = ref([]);
 const title = ref("");
 const content = ref("");
-const category = ref(null);
+const category = ref("");
 
 onMounted(() => {
     load();
@@ -85,45 +94,18 @@ async function createArticle() {
 </script>
 
 <style scoped lang="scss">
-.popup-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.popup-wrapper {
-    background-color: #fff;
-    padding: 24px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 350px;
-
-    input,
-    textarea {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        resize: none;
+.add-article-popup {
+    &__textarea {
+        padding: 15px;
+        border: 1px solid;
+        border-radius: 8px;
+        font-size: 14px;
     }
-
-    button {
-        width: 50%;
-        align-self: center;
-        height: 30px;
-        border-radius: 4px;
-        border: none;
-        cursor: pointer;
-
-        &:hover {
-            color: #90cdf4;
-            border: 2px solid #90cdf4;
-        }
+    &__select-category {
+        padding: 5px 15px;
+        border: 1px solid;
+        border-radius: 8px;
+        font-size: 14px;
     }
 }
 </style>

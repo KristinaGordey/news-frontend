@@ -31,7 +31,7 @@ body {
     background-color: #fff;
     cursor: pointer;
     padding-inline: 15px;
-	white-space: nowrap;
+    white-space: nowrap;
 }
 .button:hover {
     background-color: #f98621;
