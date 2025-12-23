@@ -1,5 +1,6 @@
 <template>
     <div class="news-card glass">
+<<<<<<< HEAD
 		<div class="news-card__header">
 			<div class="news-card__title">
 				{{ props.article.title }}
@@ -23,6 +24,19 @@
 			</div>
 		</div>
         
+=======
+        <div class="news-card__header">
+            <div class="news-card__title">{{ props.article.title }}</div>
+            <div
+                v-if="auth.isAuthenticated"
+                class="news-card__delete"
+                @click="deleteArticle"
+            >
+                x
+            </div>
+        </div>
+
+>>>>>>> 629117fac0ef01d827664e03b1e49c26fce2e18d
         <div class="news-card__content">{{ props.article.content }}</div>
         <img
             v-if="props.article.coverImage?.url"
@@ -115,6 +129,7 @@ async function deleteArticle() {
     min-height: 200px;
 
     &:hover {
+        transition-duration: 0.2s;
         transform: translateY(-4px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
@@ -176,13 +191,13 @@ async function deleteArticle() {
     }
 
     &__title {
-       	font-size: 1rem;
-		font-weight: 700;
-		color: #000;
-		margin: 0;
-		flex: 1;
-		display: flex;
-		align-items: center; 
+        font-size: 1rem;
+        font-weight: 700;
+        color: #000;
+        margin: 0;
+        flex: 1;
+        display: flex;
+        align-items: center;
     }
 
     &__content {
@@ -203,10 +218,12 @@ async function deleteArticle() {
         cursor: pointer;
 
         &:hover {
-            color: #f98621;
+            color: var(--accent-color);
+            transition-duration: 0.2s;
         }
     }
 
+<<<<<<< HEAD
 	&__header {
 		display: flex;
 		justify-content: space-between;
@@ -214,15 +231,23 @@ async function deleteArticle() {
 		gap: 10px;
 		margin-bottom: 10px;
 	}
+=======
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+>>>>>>> 629117fac0ef01d827664e03b1e49c26fce2e18d
 
-	&__delete {
-		cursor: pointer;
-		font-weight: bold;
-		font-size: 1.2rem;
-		flex-shrink: 0; 
-		line-height: 1; 
-		color: gray
-	}
+    &__delete {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        line-height: 1;
+        color: gray;
+    }
 }
 .error-toast {
     position: fixed;

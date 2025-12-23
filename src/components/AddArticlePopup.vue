@@ -3,12 +3,14 @@
         <div class="popup-wrapper" @click.stop>
 			<h2>{{ props.article ? "Редактировать новость" : "Добавить новость" }}</h2>
             <input
+                class="input"
                 v-model="title"
                 type="text"
                 placeholder="Заголовок"
                 required
             />
             <textarea
+                class="add-article-popup__textarea"
                 v-model="content"
                 placeholder="Текст новости"
                 required
@@ -117,45 +119,18 @@ function onFileChange(e) {
 </script>
 
 <style scoped lang="scss">
-.popup-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.popup-wrapper {
-    background-color: #fff;
-    padding: 24px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 350px;
-
-    input,
-    textarea {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        resize: none;
+.add-article-popup {
+    &__textarea {
+        padding: 15px;
+        border: 1px solid;
+        border-radius: 8px;
+        font-size: 14px;
     }
-
-    button {
-        width: 50%;
-        align-self: center;
-        height: 30px;
-        border-radius: 4px;
-        border: none;
-        cursor: pointer;
-
-        &:hover {
-            color: #90cdf4;
-            border: 2px solid #90cdf4;
-        }
+    &__select-category {
+        padding: 5px 15px;
+        border: 1px solid;
+        border-radius: 8px;
+        font-size: 14px;
     }
 }
 </style>

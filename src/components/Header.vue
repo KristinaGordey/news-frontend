@@ -82,7 +82,7 @@ const isAddArticlePopup = ref(false)
 	padding-inline: 96px;
 	padding-block: 10px;
 	border-bottom: 1px solid ;
-	
+	background-color: var(--white-color);
 	&__button-group {
 	display: flex;
 	gap: 15px;

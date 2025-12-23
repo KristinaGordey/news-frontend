@@ -1,12 +1,12 @@
 <template>
     <nav class="categories-menu">
-		<div
-			class="categories-menu__item"
-			:class="{ 'categories-menu__item--active': !selectedCategory }"
-			@click="selectCategory(null)"
-		>
-			Все
-		</div>
+        <div
+            class="categories-menu__item"
+            :class="{ 'categories-menu__item--active': !selectedCategory }"
+            @click="selectCategory(null)"
+        >
+            Все
+        </div>
         <div
             class="categories-menu__item"
             v-for="category in categories"
@@ -17,7 +17,7 @@
             }"
             @click="selectCategory(category)"
         >
-           {{ category?.name }}
+            {{ category?.name }}
         </div>
     </nav>
 </template>
@@ -32,17 +32,15 @@ const selectedCategory = ref(null);
 const emit = defineEmits(["categorySelected"]);
 
 function selectCategory(category) {
-  selectedCategory.value = category;
-  emit("categorySelected", category);
+    selectedCategory.value = category;
+    emit("categorySelected", category);
 }
-
 </script>
 
 <style scoped lang="scss">
 .categories-menu {
     display: flex;
     gap: 10px;
-    padding-bottom: 30px;
 
     &__item {
         padding-inline: 15px;
@@ -53,8 +51,8 @@ function selectCategory(category) {
     }
 
     &__item--active {
-        border-bottom: 1px solid #f98621;
-        color: #f98621;
+        border-bottom: 1px solid var(--accent-color);
+        color: var(--accent-color);
     }
 }
 </style>
