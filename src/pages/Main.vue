@@ -5,14 +5,13 @@
 
             <div class="news__main">
                 <Categories @categorySelected="categorySelected" />
-                <Paginator></Paginator>
                 <div v-if="loading">Загрузка...</div>
                 <div v-else class="news__list">
                     <div v-for="article in filteredArticles" :key="article.id">
                         <NewsCard :article="article" @update="updateArticles" />
                     </div>
                 </div>
-                <Paginator></Paginator>
+                <Paginator v-if="selectedCategory === 'Все'"></Paginator>
             </div>
         </div>
     </div>
@@ -32,6 +31,7 @@ const filteredArticles = computed(() => articlesStore.filteredArticles);
 const featuredNews = computed(() => articlesStore.featuredNews);
 const loading = computed(() => articlesStore.loading);
 
+const selectedCategory = ref("Все");
 const search = ref("");
 watch(search, (val) => {
     articlesStore.setSearch(val);
@@ -42,6 +42,7 @@ onMounted(() => {
 });
 
 function categorySelected(category) {
+	selectedCategory.value = category;
     articlesStore.selectCategory(category);
 }
 
