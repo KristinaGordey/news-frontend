@@ -44,7 +44,7 @@ function selectCategory(category) {
 
     &__item {
         padding-inline: 15px;
-        padding-bottom: 5px;
+
         border-radius: 6px;
         font-size: 1.5em;
         font-weight: bold;
