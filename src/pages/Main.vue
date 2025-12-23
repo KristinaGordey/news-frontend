@@ -1,20 +1,20 @@
 <template>
-  <div class="container">
-    <div class="news">
-      <FeaturedNews :articles="featuredNews" />
+    <div class="container">
+        <div class="news">
+            <FeaturedNews :articles="featuredNews" />
 
-      <div class="news__main">
-        <Categories @categorySelected="categorySelected" />
+            <div class="news__main">
+                <Categories @categorySelected="categorySelected" />
 
-        <div v-if="loading">Загрузка...</div>
-        <div v-else class="news__list">
-          <div v-for="article in filteredArticles" :key="article.id">
-            <NewsCard :article="article" @update="updateArticles" />
-          </div>
+                <div v-if="loading">Загрузка...</div>
+                <div v-else class="news__list">
+                    <div v-for="article in filteredArticles" :key="article.id">
+                        <NewsCard :article="article" @update="updateArticles" />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -32,30 +32,29 @@ const loading = computed(() => articlesStore.loading);
 
 const search = ref("");
 watch(search, (val) => {
-  articlesStore.setSearch(val);
+    articlesStore.setSearch(val);
 });
 
 onMounted(() => {
-  articlesStore.load();
+    articlesStore.load();
 });
 
 function categorySelected(category) {
-  articlesStore.selectCategory(category);
+    articlesStore.selectCategory(category);
 }
 
 const updateArticles = (deletedId) => {
-  articlesStore.removeArticle(deletedId);
+    articlesStore.removeArticle(deletedId);
 };
 </script>
 
 <style scoped lang="scss">
 .news {
-  display: flex;
-  gap: 90px;
-  padding-top: 40px;
+    display: flex;
+    gap: 90px;
 
-  &__main {
-    flex-grow: 1;
-  }
+    &__main {
+        flex-grow: 1;
+    }
 }
 </style>

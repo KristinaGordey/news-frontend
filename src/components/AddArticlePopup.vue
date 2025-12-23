@@ -18,7 +18,7 @@
                 v-model="content"
                 placeholder="Текст новости"
                 required
-            />
+            ></textarea>
             <input type="file" @change="onFileChange" accept="image/*" />
 
             <select

@@ -1,41 +1,48 @@
+:root {
+    --accent-color: #f98621;
+    --white-color: #fff;
+}
+
 body {
     margin: 0;
     font-family: "Nunito", serif;
+    background-image: url("assets\background.jpg");
+    background-size: contain;
 }
 
 .search__input::placeholder {
-    color: #f98621;
+    color: var(--accent-color);
     background: url(".\assets\searchicon.svg") no-repeat 1px center;
     text-indent: 25px;
     background-size: 16px 16px;
 }
 
 .container {
-    background-image: url("assets\background.jpg");
-
-    background-size: contain;
     padding: 0 96px;
+    padding-top: 40px;
 }
 .glass {
     background: rgba(255, 255, 255, 0.575);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 10px;
+    transition-duration: 0.2s;
 }
 
 .button {
-    border: 1px solid #f98621;
-    color: #f98621;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
     height: 30px;
     border-radius: 15px;
-    background-color: #fff;
+    background-color: var(--white-color);
     cursor: pointer;
     padding-inline: 15px;
     white-space: nowrap;
 }
 .button:hover {
-    background-color: #f98621;
-    color: #fff;
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    transition-duration: 0.2s;
 }
 
 .popup__header {
@@ -55,7 +62,7 @@ body {
 }
 
 .popup-wrapper {
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -73,10 +80,12 @@ body {
     height: 30px;
 }
 .input:focus {
-    border-color: #f98621;
+    border-color: var(--accent-color);
+    transition-duration: 0.2s;
 }
 .input:hover {
-    border-color: #f98621;
+    border-color: var(--accent-color);
+    transition-duration: 0.2s;
 }
 
 /* ------- Нормализация ------- 

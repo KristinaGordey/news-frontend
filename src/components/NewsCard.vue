@@ -91,6 +91,7 @@ async function deleteArticle() {
     min-height: 200px;
 
     &:hover {
+        transition-duration: 0.2s;
         transform: translateY(-4px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px 0 rgba(249, 167, 96, 0.702);
@@ -161,7 +162,8 @@ async function deleteArticle() {
         cursor: pointer;
 
         &:hover {
-            color: #f98621;
+            color: var(--accent-color);
+            transition-duration: 0.2s;
         }
     }
 
