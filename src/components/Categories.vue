@@ -41,7 +41,6 @@ function selectCategory(category) {
 .categories-menu {
     display: flex;
     gap: 10px;
-    padding-bottom: 30px;
 
     &__item {
         padding-inline: 15px;
