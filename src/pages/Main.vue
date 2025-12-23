@@ -1,93 +1,61 @@
 <template>
-    <div class="container">
-        <div class="news">
-            <FeaturedNews :articles="featuredNews"></FeaturedNews>
-            <div class="news__main">
-                <Categories @categorySelected="categorySelected" />
-                <div v-if="loading">Загрузка...</div>
-                <div v-else class="news__list">
-                    <div v-for="article in filteredArticles" :key="article.id">
-                        <NewsCard :article="article" />
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="news">
+      <FeaturedNews :articles="featuredNews" />
+
+      <div class="news__main">
+        <Categories @categorySelected="categorySelected" />
+
+        <div v-if="loading">Загрузка...</div>
+        <div v-else class="news__list">
+          <div v-for="article in filteredArticles" :key="article.id">
+            <NewsCard :article="article" @update="updateArticles" />
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import NewsCard from "../components/NewsCard.vue";
 import Categories from "../components/Categories.vue";
 import FeaturedNews from "../components/FeaturedNews.vue";
+import { useArticlesStore } from "../store/articles.js";
 
-const selectedCategory = ref(null);
-const articles = ref([]);
-const search = ref();
-const loading = ref(true);
+const articlesStore = useArticlesStore();
 
-const categoryFilteredArticles = computed(() => {
-    if (!selectedCategory.value) {
-        console.log(articles.value);
-        return articles.value;
-    }
-    return articles.value.filter(
-        (article) => article.category?.id === selectedCategory.value.id
-    );
-});
+const filteredArticles = computed(() => articlesStore.filteredArticles);
+const featuredNews = computed(() => articlesStore.featuredNews);
+const loading = computed(() => articlesStore.loading);
 
-const featuredNews = computed(() => {
-    const nonZero = articles.value.filter((a) => a.views > 0);
-
-    const sorted = [...nonZero].sort((a, b) => b.views - a.views);
-
-    const topViews = [...new Set(sorted.map((a) => a.views))].slice(0, 5);
-
-    const filtered = nonZero.filter((a) => topViews.includes(a.views));
-
-    return filtered.sort((a, b) => b.views - a.views);
-});
-
-const filteredArticles = computed(() => {
-    if (!search.value) {
-        return categoryFilteredArticles.value;
-    }
-    return categoryFilteredArticles.value.filter((article) =>
-        article.title.toLowerCase().includes(search.value.toLowerCase())
-    );
+const search = ref("");
+watch(search, (val) => {
+  articlesStore.setSearch(val);
 });
 
 onMounted(() => {
-    load();
+  articlesStore.load();
 });
 
-async function load() {
-    try {
-        const response = await fetch(
-            "http://localhost:1337/api/articles?populate=*"
-        );
-        const data = await response.json();
-        articles.value = data.data;
-        console.log(articles);
-        loading.value = false;
-    } catch (error) {
-        console.error("Ошибка загрузки:", error);
-    }
+function categorySelected(category) {
+  articlesStore.selectCategory(category);
 }
 
-function categorySelected(category) {
-    selectedCategory.value = category;
-}
+const updateArticles = (deletedId) => {
+  articlesStore.removeArticle(deletedId);
+};
 </script>
 
 <style scoped lang="scss">
 .news {
-    display: flex;
-    gap: 90px;
-    padding-top: 40px;
+  display: flex;
+  gap: 90px;
+  padding-top: 40px;
 
-    &__main {
-        flex-grow: 1;
-    }
+  &__main {
+    flex-grow: 1;
+  }
 }
 </style>
