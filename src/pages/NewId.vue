@@ -2,24 +2,43 @@
     <div class="container">
         <div v-if="article" class="news-detail">
             <div @click="goBack" class="news-detail__go-back">← Вернуться</div>
+            <div>Категория: {{ article.category.name }}</div>
             <header class="news-detail__header">
-                <h2 class="news-detail__title">{{ article.title }}</h2>
-                <p>
-                    {{
-                        new Date(article.publishedDate).toLocaleDateString(
-                            "ru-RU",
-                            {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                            }
-                        )
-                    }}
-                </p>
+                <div class="news-detail__header-top">
+                    <h2 class="news-detail__title">
+                        {{ article.title }}
+                    </h2>
+
+                    <p>
+                        {{
+                            new Date(article.publishedDate).toLocaleDateString(
+                                "ru-RU",
+                                {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                }
+                            )
+                        }}
+                    </p>
+                </div>
+                <div class="news-detail__header-bottom">
+                    <p class="news-detail__author">
+                        Автор статьи: {{ article.user.username }}
+                    </p>
+                    <div class="news-card__views">
+                        <img
+                            src="../assets/views.png"
+                            alt="views"
+                            class="news-card__views-icon"
+                        />
+                        <span class="news-card__views-count">{{
+                            article.views
+                        }}</span>
+                    </div>
+                </div>
             </header>
-            <p class="news-detail__author">
-                Автор статьи: {{ article.user.username }}
-            </p>
+
             <div class="news-detail__content">{{ article.content }}</div>
             <img
                 v-if="article.coverImage"
@@ -70,11 +89,19 @@ function goBack() {
     gap: 30px;
 
     &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid;
-        padding-bottom: 20px;
+        &-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid;
+            padding-bottom: 20px;
+        }
+        &-bottom {
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     &__content {

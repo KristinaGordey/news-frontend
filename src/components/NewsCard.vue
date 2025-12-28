@@ -1,28 +1,28 @@
 <template>
     <div class="news-card glass">
-		<div class="news-card__header">
-			<div class="news-card__title">
-				{{ props.article.title }}
-			</div>
+        <div class="news-card__header">
+            <div class="news-card__title">
+                {{ props.article.title }}
+            </div>
 
-			<div class="news-card__actions">
-				<img
-					src="../assets/pencil.svg"
-					alt="Редактировать"
-					class="news-card__edit"
-					@click="editArticlePopup = true"
-				/>
+            <div class="news-card__actions">
+                <img
+                    src="../assets/pencil.svg"
+                    alt="Редактировать"
+                    class="news-card__edit"
+                    @click="editArticlePopup = true"
+                />
 
-				<div
-					v-if="auth.isAuthenticated"
-					class="news-card__delete"
-					@click="deleteArticle"
-				>
-				×
-				</div>
-			</div>
-		</div>
-        
+                <div
+                    v-if="auth.isAuthenticated"
+                    class="news-card__delete"
+                    @click="deleteArticle"
+                >
+                    ×
+                </div>
+            </div>
+        </div>
+
         <div class="news-card__content">{{ props.article.content }}</div>
         <img
             v-if="props.article.coverImage?.url"
@@ -47,12 +47,12 @@
         </div>
     </div>
 
-	<AddArticlePopup 
-		v-if="editArticlePopup"
-		:article="props.article" 
-		@close="editArticlePopup = false" 
-		@updated="emit('update', props.article.id)" 
-	/>
+    <AddArticlePopup
+        v-if="editArticlePopup"
+        :article="props.article"
+        @close="editArticlePopup = false"
+        @updated="emit('update', props.article.id)"
+    />
 
     <transition name="fade">
         <div v-if="visible" class="error-toast">{{ message }}</div>
@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref } from "vue";
 import { useToast } from "../composables/useToast";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../store/index";
@@ -78,7 +78,7 @@ const props = defineProps({
 });
 const emit = defineEmits(["update"]);
 
-const editArticlePopup = ref(false)
+const editArticlePopup = ref(false);
 
 function goToDetails() {
     router.push({ name: "news_id", params: { id: props.article.id } });
@@ -129,24 +129,24 @@ async function deleteArticle() {
         right: 10px;
         cursor: pointer;
     }
-	
-	&__actions {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		margin-top: 2px;
-	}
 
-	&__edit {
-		width: 11px;
-		height: 11px;
-		cursor: pointer;
-		opacity: 0.7;
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 2px;
+    }
 
-		&:hover {
-			opacity: 1;
-		}
-  	}	
+    &__edit {
+        width: 11px;
+        height: 11px;
+        cursor: pointer;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
 
     &__image {
         border-radius: 8px;
@@ -209,13 +209,13 @@ async function deleteArticle() {
         }
     }
 
-	&__header {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		gap: 10px;
-		margin-bottom: 10px;
-	}
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
 
     &__delete {
         cursor: pointer;
