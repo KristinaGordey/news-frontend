@@ -23,8 +23,12 @@
                     </p>
                 </div>
                 <div class="news-detail__header-bottom">
-                    <p class="news-detail__author">
-                        Автор статьи: {{ article.user.username }}
+                    <p
+                        v-if="article?.users_permissions_user"
+                        class="news-detail__author"
+                    >
+                        Автор статьи:
+                        {{ article.users_permissions_user.username }}
                     </p>
                     <div class="news-card__views">
                         <img
@@ -37,23 +41,8 @@
                         }}</span>
                     </div>
                 </div>
-				<h2 class="news-detail__title">{{ article.title }}</h2>
-                <p>
-                    {{
-                        new Date(article.publishedDate).toLocaleDateString(
-                            "ru-RU",
-                            {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                            }
-                        )
-                    }}
-                </p>
             </header>
-            <p v-if="article?.user" class="news-detail__author">
-                Автор статьи: {{ article.user.username }}
-            </p>
+
             <div class="news-detail__content">{{ article.content }}</div>
             <img
                 v-if="article.coverImage"
@@ -96,10 +85,9 @@ async function load() {
 
 async function increaseViews() {
     try {
-        await fetch(
-            `http://localhost:1337/api/articles/${props.id}/view`,
-            { method: "POST" }
-        );
+        await fetch(`http://localhost:1337/api/articles/${props.id}/view`, {
+            method: "POST",
+        });
     } catch (e) {
         console.error("Ошибка увеличения просмотров", e);
     }
