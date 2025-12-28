@@ -2,14 +2,22 @@
     <div class="container">
         <div v-if="article" class="news-detail">
             <div @click="goBack" class="news-detail__go-back">← Вернуться</div>
-            <div>Категория: {{ article.category.name }}</div>
+
             <header class="news-detail__header">
-                <div class="news-detail__header-top">
+                <div class="news-detail__header-top news-detail__header-row">
+                    <div class="news-detail__category">
+                        Категория: {{ article.category.name }}
+                    </div>
+                    <div class="news-detail__reading-time">
+                        Время чтения: {{ article.readingTime }} мин.
+                    </div>
+                </div>
+                <div class="news-detail__header-middle news-detail__header-row">
                     <h2 class="news-detail__title">
                         {{ article.title }}
                     </h2>
 
-                    <p>
+                    <div>
                         {{
                             new Date(article.publishedDate).toLocaleDateString(
                                 "ru-RU",
@@ -20,9 +28,18 @@
                                 }
                             )
                         }}
-                    </p>
+                        {{
+                            new Date(article.publishedDate).toLocaleTimeString(
+                                "ru-RU",
+                                {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                }
+                            )
+                        }}
+                    </div>
                 </div>
-                <div class="news-detail__header-bottom">
+                <div class="news-detail__header-bottom news-detail__header-row">
                     <p
                         v-if="article?.users_permissions_user"
                         class="news-detail__author"
@@ -105,18 +122,17 @@ function goBack() {
     gap: 30px;
 
     &__header {
-        &-top {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        &-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        &-middle {
             border-bottom: 1px solid;
             padding-bottom: 20px;
-        }
-        &-bottom {
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
     }
 

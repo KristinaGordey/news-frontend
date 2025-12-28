@@ -7,20 +7,41 @@
             {{ props.article.content }}
         </div>
         <div class="featured-news-card__footer news-card__footer">
-            <div class="featured-news-card__views news-card__views">
-                <img
-                    src="../assets/views.png"
-                    alt="views"
-                    class="news-card__views-icon"
-                />
-                <span class="news-card__views-count">{{
-                    props.article.views
-                }}</span>
+            <div class="news-card__meta">
+                <div class="news-card__publish-date">
+                    {{
+                        new Date(article.publishedDate).toLocaleDateString(
+                            "ru-RU",
+                            {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                            }
+                        )
+                    }}
+                    {{
+                        new Date(article.publishedDate).toLocaleTimeString(
+                            "ru-RU",
+                            {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            }
+                        )
+                    }}
+                </div>
+                <div class="news-card__views">
+                    <img
+                        src="../assets/views.png"
+                        alt="views"
+                        class="news-card__views-icon"
+                    />
+                    <span class="news-card__views-count">{{
+                        props.article.views
+                    }}</span>
+                </div>
             </div>
-            <div
-                class="featured-news-card__details news-card__details"
-                @click="goToDetails"
-            >
+
+            <div class="news-card__details" @click="goToDetails">
                 Подробнее..
             </div>
         </div>

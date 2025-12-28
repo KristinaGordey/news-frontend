@@ -7,6 +7,7 @@
 
             <div class="news-card__actions">
                 <img
+                    v-if="auth.isAuthenticated"
                     src="../assets/pencil.svg"
                     alt="Редактировать"
                     class="news-card__edit"
@@ -31,16 +32,40 @@
             class="news-card__image"
         />
         <div class="news-card__footer">
-            <div class="news-card__views">
-                <img
-                    src="../assets/views.png"
-                    alt="views"
-                    class="news-card__views-icon"
-                />
-                <span class="news-card__views-count">{{
-                    props.article.views
-                }}</span>
+            <div class="news-card__meta">
+                <div class="news-card__publish-date">
+                    {{
+                        new Date(article.publishedDate).toLocaleDateString(
+                            "ru-RU",
+                            {
+                                day: "numeric",
+                                month: "numeric",
+                                year: "numeric",
+                            }
+                        )
+                    }}
+                    {{
+                        new Date(article.publishedDate).toLocaleTimeString(
+                            "ru-RU",
+                            {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            }
+                        )
+                    }}
+                </div>
+                <div class="news-card__views">
+                    <img
+                        src="../assets/views.png"
+                        alt="views"
+                        class="news-card__views-icon"
+                    />
+                    <span class="news-card__views-count">{{
+                        props.article.views
+                    }}</span>
+                </div>
             </div>
+
             <div class="news-card__details" @click="goToDetails">
                 Подробнее..
             </div>
@@ -157,14 +182,21 @@ async function deleteArticle() {
 
     &__footer {
         display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: small;
+    }
+    &__meta {
+        display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin-top: auto;
+    }
+    &__publish-date {
     }
 
     &__views {
         display: flex;
         align-items: center;
+        gap: 5px;
     }
 
     &__views-icon {
@@ -173,11 +205,10 @@ async function deleteArticle() {
     }
 
     &__views-count {
-        margin-left: 4px;
     }
 
     &__title {
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: 700;
         color: #000;
         margin: 0;
@@ -200,7 +231,7 @@ async function deleteArticle() {
     &__details {
         color: #333;
         text-align: right;
-        font-size: small;
+
         cursor: pointer;
 
         &:hover {
