@@ -17,7 +17,7 @@
                     }}
                 </p>
             </header>
-            <p class="news-detail__author">
+            <p v-if="article?.user" class="news-detail__author">
                 Автор статьи: {{ article.user.username }}
             </p>
             <div class="news-detail__content">{{ article.content }}</div>
@@ -43,8 +43,9 @@ const props = defineProps({
 
 const article = ref(null);
 
-onMounted(() => {
-    load();
+onMounted(async () => {
+    await load();
+    await increaseViews();
 });
 
 async function load() {
@@ -58,6 +59,18 @@ async function load() {
         console.error("Ошибка загрузки:", error);
     }
 }
+
+async function increaseViews() {
+    try {
+        await fetch(
+            `http://localhost:1337/api/articles/${props.id}/view`,
+            { method: "POST" }
+        );
+    } catch (e) {
+        console.error("Ошибка увеличения просмотров", e);
+    }
+}
+
 function goBack() {
     router.back();
 }

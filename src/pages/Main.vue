@@ -11,7 +11,7 @@
                         <NewsCard :article="article" @update="updateArticles" />
                     </div>
                 </div>
-                <Paginator v-if="selectedCategory === 'Все'"></Paginator>
+                <Paginator ></Paginator>
             </div>
         </div>
     </div>
@@ -39,6 +39,7 @@ watch(search, (val) => {
 
 onMounted(() => {
     articlesStore.load();
+	articlesStore.loadPopular();
 });
 
 function categorySelected(category) {
