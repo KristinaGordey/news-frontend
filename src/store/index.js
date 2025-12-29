@@ -34,31 +34,31 @@ export const useAuthStore = defineStore("auth", {
 			this.status = "loading";
 			try {
 				const response = await axios.post(
-				"http://localhost:1337/api/auth/local",
-				{
-					identifier: email,
-					password: password,
-				}
+					"http://localhost:1337/api/auth/local",
+					{
+						identifier: email,
+						password: password,
+					}
 				);
 
 				const token = response.data.jwt;
-
 				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 				this.token = token;
 
-				const me = await axios.get("http://localhost:1337/api/users/me");
+				// 👇 ВАЖНО: populate=role
+				const me = await axios.get(
+					"http://localhost:1337/api/users/me?populate=role"
+				);
+
 				this.user = me.data;
 
 				localStorage.setItem("token", token);
 				localStorage.setItem("user", JSON.stringify(me.data));
 
+				console.log("ROLE:", me.data.role?.type);
 				this.status = "success";
-				console.log("user with role:", me.data);
 			} catch (error) {
-				console.log("AUTH ERROR:", error);
 				this.status = "error";
-				this.token = null;
-				this.user = null;
 				throw error;
 			}
 		},
