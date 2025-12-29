@@ -44,6 +44,16 @@ body {
     color: var(--white-color);
     transition-duration: 0.2s;
 }
+.button:disabled {
+    border: 1px solid grey;
+    color: grey;
+    height: 30px;
+    border-radius: 15px;
+    background-color: var(--white-color);
+    cursor: pointer;
+    padding-inline: 15px;
+    white-space: nowrap;
+}
 
 .popup__header {
     text-align: center;

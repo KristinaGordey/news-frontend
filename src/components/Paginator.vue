@@ -4,7 +4,11 @@
             Назад
         </button>
         <span>Страница {{ page }} из {{ pageCount }} (всего {{ total }})</span>
-        <button class="button" @click="nextPage" :disabled="page === pageCount">
+        <button
+            class="button"
+            @click="nextPage"
+            :disabled="page === pageCount || pageCount === 0"
+        >
             Вперёд
         </button>
     </div>
@@ -38,6 +42,6 @@ function prevPage() {
     gap: 1rem;
     align-items: center;
     justify-content: center;
-	margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 </style>
