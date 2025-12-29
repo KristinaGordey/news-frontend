@@ -60,7 +60,10 @@
                 </div>
             </header>
 
-            <div class="news-detail__content">{{ article.content }}</div>
+            <div
+                v-html="marked(article.content)"
+                class="news-detail__content"
+            ></div>
             <img
                 v-if="article.coverImage"
                 :src="'http://localhost:1337' + article.coverImage.url"
@@ -74,6 +77,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import router from "../router";
+import { marked } from "marked";
 const props = defineProps({
     id: {
         type: String,
@@ -138,6 +142,8 @@ function goBack() {
 
     &__content {
         font-size: 1.2em;
+        padding: 15px;
+        white-space: pre-wrap;
     }
 
     &__image {
