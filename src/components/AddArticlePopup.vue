@@ -10,39 +10,61 @@
                     }}
                 </h2>
             </header>
+
             <div class="add-article-popup__body">
-                <input
-                    class="input"
-                    v-model="title"
-                    type="text"
-                    placeholder="Заголовок"
-                    required
-                />
-                <textarea
-                    class="textarea add-article-popup__textarea"
-                    v-model="excerpt"
-                    placeholder="Краткое содержание"
-                    required
-                >
-                </textarea>
-                <textarea
-                    class="textarea add-article-popup__textarea"
-                    v-model="content"
-                    placeholder="Текст новости"
-                    required
-                >
-                </textarea>
+                <!-- Заголовок -->
+                <div class="add-article-popup__body-field">
+                    <input
+                        class="input"
+                        v-model="title"
+                        type="text"
+                        placeholder="Заголовок"
+                    />
+                    <span v-if="errors.title" class="error">{{
+                        errors.title
+                    }}</span>
+                </div>
+
+                <div class="add-article-popup__body-field">
+                    <textarea
+                        class="textarea add-article-popup__textarea"
+                        v-model="excerpt"
+                        placeholder="Краткое содержание"
+                    ></textarea>
+                    <span v-if="errors.excerpt" class="error">{{
+                        errors.excerpt
+                    }}</span>
+                </div>
+                <!-- Краткое содержание -->
+                <div class="add-article-popup__body-field">
+                    <textarea
+                        class="textarea add-article-popup__textarea"
+                        v-model="content"
+                        placeholder="Текст новости"
+                    ></textarea>
+                    <span v-if="errors.content" class="error">{{
+                        errors.content
+                    }}</span>
+                </div>
+                <!-- Текст новости -->
+                <div class="add-article-popup__body-field">
+                    <select v-model="category" class="select">
+                        <option disabled value="">Выберите категорию</option>
+                        <option
+                            v-for="cat in categories"
+                            :key="cat.id"
+                            :value="cat.id"
+                        >
+                            {{ cat.name }}
+                        </option>
+                    </select>
+                    <span v-if="errors.category" class="error">{{
+                        errors.category
+                    }}</span>
+                </div>
+                <!-- Категория -->
+
                 <input type="file" @change="onFileChange" accept="image/*" />
-                <select v-model="category" required class="select">
-                    <option disabled value="">Выберите категорию</option>
-                    <option
-                        v-for="cat in categories"
-                        :key="cat.id"
-                        :value="cat.id"
-                    >
-                        {{ cat.name }}
-                    </option>
-                </select>
                 <div v-if="coverImagePreview">
                     <p>Текущее изображение:</p>
                     <img
@@ -88,8 +110,24 @@ const coverImagePreview = ref(
         ? `http://localhost:1337${props.article.coverImage.url}`
         : null
 );
-
+const errors = ref({
+    title: "",
+    excerpt: "",
+    content: "",
+    category: "",
+});
 async function createArticle() {
+    errors.value = { title: "", excerpt: "", content: "", category: "" };
+
+    if (!title.value.trim()) errors.value.title = "Введите заголовок";
+    if (!excerpt.value.trim())
+        errors.value.excerpt = "Введите краткое содержание";
+    if (!content.value.trim()) errors.value.content = "Введите текст новости";
+    if (!category.value) errors.value.category = "Выберите категорию";
+
+    if (Object.values(errors.value).some((e) => e)) {
+        return;
+    }
     try {
         console.log(categories);
         console.log(category);
@@ -162,7 +200,15 @@ function onFileChange(e) {
 </script>
 
 <style scoped lang="scss">
+.error {
+    color: red;
+    font-size: 12px;
+}
 .add-article-popup {
+    &__body-field {
+        display: flex;
+        flex-direction: column;
+    }
     &__body {
         display: flex;
         flex-direction: column;

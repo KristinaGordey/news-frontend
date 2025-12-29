@@ -47,7 +47,7 @@ export const useArticlesStore = defineStore("articles", {
                 params.append("populate", "*");
                 params.append("pagination[page]", this.page);
                 params.append("pagination[pageSize]", this.pageSize);
-                params.append("sort", `publishedAt:${this.selectedSort}`);
+                params.append("sort", `publishedDate:${this.selectedSort}`);
 
                 if (this.selectedCategory) {
                     params.append(
