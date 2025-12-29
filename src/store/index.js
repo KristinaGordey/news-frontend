@@ -45,7 +45,6 @@ export const useAuthStore = defineStore("auth", {
 				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 				this.token = token;
 
-				// 👇 ВАЖНО: populate=role
 				const me = await axios.get(
 					"http://localhost:1337/api/users/me?populate=role"
 				);
