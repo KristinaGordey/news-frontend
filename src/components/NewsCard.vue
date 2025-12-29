@@ -112,31 +112,33 @@ function goToDetails() {
 }
 
 async function deleteArticle() {
-    try {
-        await axios.delete(
-            `http://localhost:1337/api/articles/${props.article.id}`,
-            {
-                headers: { Authorization: `Bearer ${auth.token}` },
+    const desicion = confirm("Удалить статью?");
+    if (desicion) {
+        try {
+            await axios.delete(
+                `http://localhost:1337/api/articles/${props.article.id}`,
+                {
+                    headers: { Authorization: `Bearer ${auth.token}` },
+                }
+            );
+            emit("update", props.article.id);
+        } catch (err) {
+            if (err.response?.status === 403) {
+                show("Вы не можете удалить чужую статью");
             }
-        );
-        emit("update", props.article.id);
-    } catch (err) {
-        if (err.response?.status === 403) {
-            show("Вы не можете удалить чужую статью");
         }
     }
 }
 function tryEditArticle() {
-  if (
-    props.article.users_permissions_user?.id === auth.user?.id ||
-    auth.user?.role?.name === "Editor"
-  ) {
-    editArticlePopup.value = true;
-  } else {
-    show("Вы не можете редактировать не свою статью");
-  }
+    if (
+        props.article.users_permissions_user?.id === auth.user?.id ||
+        auth.user?.role?.name === "Editor"
+    ) {
+        editArticlePopup.value = true;
+    } else {
+        show("Вы не можете редактировать не свою статью");
+    }
 }
-
 </script>
 
 <style lang="scss">
