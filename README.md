@@ -1,5 +1,28 @@
-# Vue 3 + Vite
+# Frontend (Vue 3 + Vite)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Frontend-часть приложения, реализованная на **Vue 3** и **Vite**,  
+с управлением состоянием через **Pinia** и аутентификацией через **Strapi v5 (JWT)**.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+---
+
+## Стек технологий
+
+- Vue 3 (Composition API, `<script setup>`)
+- Vite
+- Pinia
+- Axios
+- Vue Router
+
+---
+
+## Установка зависимостей
+
+npm install
+
+## Запуск проекта
+
+npm run dev
+
+
+
+
