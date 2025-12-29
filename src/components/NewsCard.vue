@@ -11,7 +11,7 @@
                     src="../assets/pencil.svg"
                     alt="Редактировать"
                     class="news-card__edit"
-                    @click="editArticlePopup = true"
+                    @click="tryEditArticle"
                 />
 
                 <div
@@ -126,6 +126,17 @@ async function deleteArticle() {
         }
     }
 }
+function tryEditArticle() {
+  if (
+    props.article.users_permissions_user?.id === auth.user?.id ||
+    auth.user?.role?.name === "Editor"
+  ) {
+    editArticlePopup.value = true;
+  } else {
+    show("Вы не можете редактировать не свою статью");
+  }
+}
+
 </script>
 
 <style lang="scss">
