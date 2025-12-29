@@ -31,37 +31,37 @@ export const useAuthStore = defineStore("auth", {
 			}
 		},
         async login({ email, password }) {
-            this.status = "loading";
-            try {
-                const response = await axios.post(
-                    "http://localhost:1337/api/auth/local",
-                    {
-                        identifier: email,
-                        password: password,
-                    }
-                );
+			this.status = "loading";
+			try {
+				const response = await axios.post(
+				"http://localhost:1337/api/auth/local",
+				{
+					identifier: email,
+					password: password,
+				}
+				);
 
-                const token = response.data.jwt;
-                const user = response.data.user;
+				const token = response.data.jwt;
 
-                axios.defaults.headers.common[
-                    "Authorization"
-                ] = `Bearer ${token}`;
+				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+				this.token = token;
 
-                this.token = token;
-                this.user = user;
+				const me = await axios.get("http://localhost:1337/api/users/me");
+				this.user = me.data;
+
 				localStorage.setItem("token", token);
-				localStorage.setItem("user", JSON.stringify(user));
-                this.status = "success";
-                console.log("user:", user);
-            } catch (error) {
-                console.log("AUTH ERROR:", error);
-                this.status = "error";
-                this.token = null;
-                this.user = null;
-                throw error;
-            }
-        },
+				localStorage.setItem("user", JSON.stringify(me.data));
+
+				this.status = "success";
+				console.log("user with role:", me.data);
+			} catch (error) {
+				console.log("AUTH ERROR:", error);
+				this.status = "error";
+				this.token = null;
+				this.user = null;
+				throw error;
+			}
+		},
 
         async register({ username, email, password }) {
             this.status = "loading";
