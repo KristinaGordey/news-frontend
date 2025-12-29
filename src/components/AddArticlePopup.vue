@@ -13,7 +13,7 @@
 
             <div class="add-article-popup__body">
                 <!-- Заголовок -->
-                <div class="add-article-popup__body-field">
+                <div class="popup-field">
                     <input
                         class="input"
                         v-model="title"
@@ -200,15 +200,7 @@ function onFileChange(e) {
 </script>
 
 <style scoped lang="scss">
-.error {
-    color: red;
-    font-size: 12px;
-}
 .add-article-popup {
-    &__body-field {
-        display: flex;
-        flex-direction: column;
-    }
     &__body {
         display: flex;
         flex-direction: column;

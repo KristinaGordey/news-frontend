@@ -112,6 +112,14 @@ body {
     border-color: var(--accent-color);
     transition-duration: 0.2s;
 }
+.popup-field {
+    display: flex;
+    flex-direction: column;
+}
+.error {
+    color: red;
+    font-size: 12px;
+}
 /* ------- Нормализация ------- 
 /**
   Нормализация блочной модели
