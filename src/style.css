@@ -47,12 +47,6 @@ body {
 .button:disabled {
     border: 1px solid grey;
     color: grey;
-    height: 30px;
-    border-radius: 15px;
-    background-color: var(--white-color);
-    cursor: pointer;
-    padding-inline: 15px;
-    white-space: nowrap;
 }
 
 .popup__header {
@@ -80,6 +74,7 @@ body {
     flex-direction: column;
     gap: 30px;
     min-width: 300px;
+    max-height: 90vh;
     align-items: stretch;
 }
 .input {
@@ -97,7 +92,26 @@ body {
     border-color: var(--accent-color);
     transition-duration: 0.2s;
 }
-
+.textarea {
+    padding: 15px;
+    border: 1px solid;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: both;
+}
+.textarea:hover {
+    border-color: var(--accent-color);
+    transition-duration: 0.2s;
+}
+.select {
+    border-radius: 15px;
+    border: 1px solid;
+    padding: 5px;
+}
+.select:hover {
+    border-color: var(--accent-color);
+    transition-duration: 0.2s;
+}
 /* ------- Нормализация ------- 
 /**
   Нормализация блочной модели

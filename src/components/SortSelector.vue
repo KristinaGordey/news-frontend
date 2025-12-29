@@ -1,7 +1,7 @@
 <template>
     <div class="data-sort">
         <select
-            class="data-sort__select"
+            class="data-sort__select select"
             id="sort"
             v-model="selected"
             @change="$emit('sortChanged', selected)"
@@ -21,14 +21,7 @@ const selected = ref("desc");
 .data-sort {
     text-align: end;
     &__select {
-        border-radius: 15px;
-        border: 1px solid;
-        padding: 5px;
         font-size: smaller;
-        &:hover {
-            border-color: var(--accent-color);
-            transition-duration: 0.2s;
-        }
     }
 }
 </style>

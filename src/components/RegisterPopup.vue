@@ -1,5 +1,5 @@
 <template>
-	<div class="register-popup popup-overlay" @click="$emit('close')">
+	<div class="popup-overlay" @click="$emit('close')">
 		<div class="register-popup popup-wrapper" @click.stop>
 			<header class="register-popup__header popup__header">
 				<h2 class="register-popup__title popup__title">Регистрация</h2>

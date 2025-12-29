@@ -1,8 +1,8 @@
 <template>
     <div class="popup-overlay" @click="$emit('close')">
-        <div class="popup-wrapper" @click.stop>
+        <div class="add-article-popup popup-wrapper" @click.stop>
             <header class="popup__header">
-                <h2 class="register-popup__title popup__title">
+                <h2 class="popup__title">
                     {{
                         props.article
                             ? "Редактировать новость"
@@ -10,44 +10,48 @@
                     }}
                 </h2>
             </header>
-
-            <input
-                class="input"
-                v-model="title"
-                type="text"
-                placeholder="Заголовок"
-                required
-            />
-            <textarea
-                class="add-article-popup__textarea"
-                v-model="excerpt"
-                placeholder="Краткое содержание"
-                required
-            >
-            </textarea>
-            <textarea
-                class="add-article-popup__textarea"
-                v-model="content"
-                placeholder="Текст новости"
-                required
-            >
-            </textarea>
-            <input type="file" @change="onFileChange" accept="image/*" />
-            <select v-model="category" required>
-                <option disabled value="">Выберите категорию</option>
-                <option v-for="cat in categories" :key="cat.id" :value="cat.id">
-                    {{ cat.name }}
-                </option>
-            </select>
-            <div v-if="coverImagePreview">
-                <p>Текущее изображение:</p>
-                <img
-                    :src="coverImagePreview"
-                    alt="Cover Image"
-                    style="max-width: 100%; max-height: 200px"
+            <div class="add-article-popup__body">
+                <input
+                    class="input"
+                    v-model="title"
+                    type="text"
+                    placeholder="Заголовок"
+                    required
                 />
+                <textarea
+                    class="textarea add-article-popup__textarea"
+                    v-model="excerpt"
+                    placeholder="Краткое содержание"
+                    required
+                >
+                </textarea>
+                <textarea
+                    class="textarea add-article-popup__textarea"
+                    v-model="content"
+                    placeholder="Текст новости"
+                    required
+                >
+                </textarea>
+                <input type="file" @change="onFileChange" accept="image/*" />
+                <select v-model="category" required class="select">
+                    <option disabled value="">Выберите категорию</option>
+                    <option
+                        v-for="cat in categories"
+                        :key="cat.id"
+                        :value="cat.id"
+                    >
+                        {{ cat.name }}
+                    </option>
+                </select>
+                <div v-if="coverImagePreview">
+                    <p>Текущее изображение:</p>
+                    <img
+                        :src="coverImagePreview"
+                        alt="Cover Image"
+                        style="max-width: 100%; max-height: 200px"
+                    />
+                </div>
             </div>
-
             <button class="button" @click="createArticle">
                 {{ props.article ? "Сохранить" : "Создать" }}
             </button>
@@ -159,11 +163,15 @@ function onFileChange(e) {
 
 <style scoped lang="scss">
 .add-article-popup {
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        overflow-y: auto;
+        padding-inline: 20px;
+    }
     &__textarea {
-        padding: 15px;
-        border: 1px solid;
-        border-radius: 8px;
-        font-size: 14px;
+        flex-shrink: 0;
     }
     &__select-category {
         padding: 5px 15px;
