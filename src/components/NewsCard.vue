@@ -24,7 +24,9 @@
             </div>
         </div>
 
-        <div class="news-card__content">{{ props.article.content }}</div>
+        <div class="news-card__content">
+            {{ props.article.excerpt || props.article.content }}
+        </div>
         <img
             v-if="props.article.coverImage?.url"
             :src="'http://localhost:1337' + props.article.coverImage.url"

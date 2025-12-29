@@ -4,7 +4,7 @@
             {{ props.article.title }}
         </div>
         <div class="news-card__content featured-news-card__content">
-            {{ props.article.content }}
+            {{ props.article.excerpt || props.article.content }}
         </div>
         <div class="featured-news-card__footer news-card__footer">
             <div class="news-card__meta">

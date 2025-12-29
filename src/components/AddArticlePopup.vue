@@ -20,6 +20,13 @@
             />
             <textarea
                 class="add-article-popup__textarea"
+                v-model="excerpt"
+                placeholder="Краткое содержание"
+                required
+            >
+            </textarea>
+            <textarea
+                class="add-article-popup__textarea"
                 v-model="content"
                 placeholder="Текст новости"
                 required
@@ -68,6 +75,7 @@ const props = defineProps({
 const emit = defineEmits(["close"]);
 
 const title = ref(props.article?.title || "");
+const excerpt = ref(props.article?.excerpt || "");
 const content = ref(props.article?.content || "");
 const category = ref(props.article?.category?.id || null);
 const file = ref(null);
@@ -102,6 +110,7 @@ async function createArticle() {
             data: {
                 title: title.value,
                 content: content.value,
+                excerpt: excerpt.value,
                 category: { connect: [{ id: Number(category.value) }] },
                 coverImage: imageId
                     ? imageId
